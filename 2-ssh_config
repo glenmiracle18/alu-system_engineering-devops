@@ -1,5 +1,0 @@
-# client ssh config file.... connect without password
-
-Host *
-	IdentityFile ~/.ssh/school
-	PasswordAuthentication no

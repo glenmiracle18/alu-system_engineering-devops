@@ -1,1 +1,1 @@
-This repo contains everthing devops related
+.This repo contains everthing devops related
