@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#a Bash script that configures a new Ubuntu machine to respect above requirements (this script will be run on the server itself)
+
+#update install list and install nginx
+sudo apt-get install
+sudo apt-get install nginx
+
+#alter defauld html page of nginx
+echo "Holberton School" | sudo tee /var/www/html/index.html
+
+#configure the redirect
+sudo sed -i '/server_name _;/a \
+\
+    location /redirect_me { \
+        return 301 http://apple.com; \
+    }' /etc/nginx/sites-available/default
+
+#restart nginx
+sudo service nginx restart
+
+#ouput message
+echo "Nginx installed and configured. Access http://your_server_ip/ to see the Holberton School page."
+
