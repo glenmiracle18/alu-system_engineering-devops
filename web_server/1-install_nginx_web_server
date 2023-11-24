@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-#a Bash script that configures a new Ubuntu machine to respect above requirements (this script will be run on the server itself)
+# installing and config nginx
 
-#update install list and install nginx
-sudo apt-get install
-sudo apt-get install nginx
+apt-get update
+apt-get -y install nginx
 
-#alter defauld html page of nginx
-echo "Holberton School" | sudo tee /var/www/html/index.html
+# adding an html page
+echo "Holberton School" > /var/www/html/index.html
 
-#restart nginx
-sudo service nginx restart
-
-#ouput message
-echo "Nginx installed and configured. Access http://your_server_ip/ to see the Holberton School page."
-
+# checking if service is running
+state=$(pgrep nginx)
+if [ -n "$state" ];
+then
+	sudo service nginx start
+else
+	sudo service nginx restart
+fi
