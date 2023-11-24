@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#haproxy configuration for load balancer
+
+apt-get update
+apt-get -y install haproxy
+
+#configuration
+sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOF
+frontend http_front
+    bind *:80
+    stats uri /haproxy?stats
+    default_backend http_back
+
+backend http_back
+    balance roundrobin
+    server 5830web-01 3.88.23.166:80 check
+    server 5830web-02 52.207.250.71:80 check
+EOF
+
+#proxy restart
+sudo service haproxy restart
+
+# Enable HAProxy to be managed via init script
+sudo systemctl enable haproxy
+
+# Output message
+echo "HAProxy installed and configured. Traffic will be sent to [STUDENT_ID]-web-01 and [STUDENT_ID]-web-02 using roundrobin algorithm."
