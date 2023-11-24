@@ -21,7 +21,7 @@ echo "<!DOCTYPE html>
 sudo sed -i 's/^\(listen\s\+\)80/\180/' /etc/nginx/sites-available/default
 
 #restart nginx
-sudo /etc/init.d/nginx restart
+sudo service nginx restart
 
 #ouput message
 echo "Nginx installed and configured. Access http://your_server_ip/ to see the Holberton School page."
