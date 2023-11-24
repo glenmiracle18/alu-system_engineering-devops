@@ -1,23 +1,37 @@
 #!/usr/bin/env bash
-#a Bash script that configures a new Ubuntu machine to respect above requirements (this script will be run on the server itself)
+# installing and config nginx
 
-#update install list and install nginx
-sudo apt-get install
-sudo apt-get install nginx
+apt-get update
+apt-get -y install nginx
 
-#alter defauld html page of nginx
-echo "Holberton School" | sudo tee /var/www/html/index.html
+# adding a html page
+echo "Holberton School" > /var/www/html/index.html
 
-#configure the redirect
-sudo sed -i "/server_name _;/a \
-    \
-    location /redirect_me { \
-        return 301 http://example.com/new_page; \
-    }" /etc/nginx/sites-available/default
+CONFIG=\
+"server {
+	listen 80 default_server;
+  	listen [::]:80 default_server;
 
-#restart nginx
-sudo service nginx restart
+        root /var/www/html;
 
-#ouput message
-echo "Nginx installed and configured. Access http://your_server_ip/ to see the Holberton School page."
+        index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	rewrite ^/redirect_me(.*)$ http://www.google.com/ permanent;
+        location / {
+                try_files \$uri \$uri/ =404;
+	}
+}"
 
+echo -e "$CONFIG" > /etc/nginx/sites-enabled/default
+
+# checking if service is running
+state=$(pgrep nginx)
+if [ -n "$state" ];
+then
+	sudo service nginx restart
+	echo "resarting Nginx...."
+else
+	sudo service nginx start
+	echo "Ngix started.."
+fi
+echo "done"
