@@ -1,28 +1,27 @@
 #!/usr/bin/env bash
-#haproxy configuration for load balancer
+#Configuration for haproxy load balancer
 
 apt-get update
 apt-get -y install haproxy
 
-#configuration
-sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOF
-frontend www
-    mode http
-    bind *:80
-    stats uri /haproxy?stats
-    default_backend allServers
-
+BACKEND_CONFIG=\
+"
 backend allServers
-    timeout connect 10s
-    timeout server 10s
-    balance roundrobin
-    mode http
-    server 5830-web-01 3.88.23.166:80 check
-    server 5830-web-02 52.207.250.71:80 check
-EOF
-
-#proxy restart
-sudo service haproxy restart
-
-# Enable HAProxy to be managed via init script
-sudo systemctl enable haproxy
+	timeout connect 10s
+	timeout server  10s
+	balance roundrobin
+	mode http
+	server 5830-web-01 3.88.23.166:80 check
+	server 5830-web-02 54.165.91.235:80 check
+"
+FRONTEND_CONFIG=\
+"
+frontend www
+	mode http
+	timeout client 10s
+	bind *:80
+	default_backend allServers
+"
+echo -e "$FRONTEND_CONFIG" >> /etc/haproxy/haproxy.cfg
+echo -e "$BACKEND_CONFIG" >> /etc/haproxy/haproxy.cfg
+service haproxy restart
