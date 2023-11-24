@@ -9,11 +9,11 @@ sudo apt-get install nginx
 echo "Holberton School" | sudo tee /var/www/html/index.html
 
 #configure the redirect
-sudo sed -i '/server_name _;/a \
+sudo sed -i "/server_name _;/a \
     \
     location /redirect_me { \
         return 301 http://example.com/new_page; \
-    }' /etc/nginx/sites-available/default
+    }" /etc/nginx/sites-available/default
 
 #restart nginx
 sudo service nginx restart
