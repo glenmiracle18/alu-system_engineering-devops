@@ -12,8 +12,11 @@ frontend www
     stats uri /haproxy?stats
     default_backend allServers
 
-backend http_back
+backend allServers
+    timeout connect 10s
+    timeout server 10s
     balance roundrobin
+    mode http
     server 5830-web-01 3.88.23.166:80 check
     server 5830-web-02 52.207.250.71:80 check
 EOF
@@ -23,6 +26,3 @@ sudo service haproxy restart
 
 # Enable HAProxy to be managed via init script
 sudo systemctl enable haproxy
-
-# Output message
-echo "HAProxy installed and configured. Traffic will be sent to [STUDENT_ID]-web-01 and [STUDENT_ID]-web-02 using roundrobin algorithm."
