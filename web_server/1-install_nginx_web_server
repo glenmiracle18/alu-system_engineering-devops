@@ -6,10 +6,7 @@ sudo apt-get install
 sudo apt-get install nginx
 
 #alter defauld html page of nginx
-echo "Holberton School for the win" | sudo tee /var/www/html/index.html
-
-#configure nginx to listen to port 80
-sudo sed -i 's/^\(listen\s\+\)80/\180/' /etc/nginx/sites-available/default
+echo "Holberton School" | sudo tee /var/www/html/index.html
 
 #restart nginx
 sudo service nginx restart
