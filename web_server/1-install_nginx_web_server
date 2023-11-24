@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#a Bash script that configures a new Ubuntu machine to respect above requirements (this script will be run on the server itself)
+
+#update install list and install nginx
+sudo apt-get install
+sudo apt-get install nginx
+
+#alter defauld html page of nginx
+echo "<!DOCTYPE html>
+<html>
+<head>
+    <title>Holberton School</title>
+</head>
+<body>
+    <h1>Holberton School</h1>
+    <p>Welcome to Nginx!</p>
+</body>
+</html>" | sudo tee /var/www/html/index.html
+
+#configure nginx to listen to port 80
+sudo sed -i 's/^\(listen\s\+\)80/\180/' /etc/nginx/sites-available/default
+
+#restart nginx
+sudo /etc/init.d/nginx restart
+
+#ouput message
+echo "Nginx installed and configured. Access http://your_server_ip/ to see the Holberton School page."
+
