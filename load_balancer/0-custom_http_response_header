@@ -4,7 +4,7 @@
 apt-get update
 apt-get -y install nginx
 
-# adding a html page
+# adding an HTML page
 echo "Holberton School" > /var/www/html/index.html
 echo "Ceci n'est pas une page" > /usr/share/nginx/html/custom_404.html
 
@@ -16,6 +16,8 @@ CONFIG=\
         root /var/www/html;
 
         index index.html index.htm index.nginx-debian.html;
+
+        add_header X-Served-By \$hostname;  # Add custom header
 
 	error_page 404 /custom_404.html;
 
@@ -46,3 +48,4 @@ else
 	echo "Ngix started.."
 fi
 echo "done"
+
