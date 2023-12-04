@@ -1,31 +1,4 @@
 #!/usr/bin/env bash
-# Install Nginx (if not already installed)
-apt-get update
-apt-get install -y nginx
-
-# Backup the default Nginx configuration
-cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
-
-# nginx configuration to listen to port 80 as default
-cat <<EOL > /etc/nginx/sites-available/default
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    server_name _;
-
-    location / {
-        root /var/www/html;
-        index index.html index.htm;
-    }
-}
-EOL
-
-# nginx restart
+# bash script that configures 'nginx' to run & listen to port 80
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 service nginx restart
-
-# Verify that Nginx is now listening on port 80
-curl 0:80
-
-# Verify that Nginx is now listening on port 80
-curl 0:80
