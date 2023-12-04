@@ -1,0 +1,9 @@
+docker run -p 8080:80 -d -it holbertonschool/265-0
+docker ps
+docker exec -it CONTAINER_ID /bin/bash
+cd /etc/apache2/
+nano sites-available/000-default.conf
+service apache2 restart
+exit
+curl 0:8080
+
