@@ -27,3 +27,10 @@ service nginx restart
 # Verify that Nginx is now listening on port 80
 curl 0:80
 
+# Verify that Nginx is now listening on port 80
+nginx_pid=$(pgrep nginx)
+if [ -n "$nginx_pid" ]; then
+    echo "Nginx is running with PID $nginx_pid on port 80"
+else
+    echo "Failed to start Nginx on port 80"
+fi
