@@ -1,10 +1,32 @@
 #!/usr/bin/env bash
+
+# Start Docker container
 docker run -p 8080:80 -d -it holbertonschool/265-0
-docker ps
-docker exec -it CONTAINER_ID /bin/bash
+
+# Get container ID
+CONTAINER_ID=$(docker ps -q)
+
+# Connect to the container
+docker exec -it $CONTAINER_ID /bin/bash
+
+# Navigate to Apache configuration directory
 cd /etc/apache2/
-nano sites-available/000-default.conf
-service apache2 restart
+
+# Edit the default Apache configuration file
+sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\nServerName localhost/' sites-available/000-default.conf
+
+# Create /var/www/html directory if it doesn't exist
+mkdir -p /var/www/html
+
+# Navigate to the DocumentRoot directory
+cd /var/www/html
+
+# Create or edit the index.html file
+echo "Hello Holberton" > index.html
+
+# Restart Apache
+sudo service apache2 restart
+
+# Exit the container
 exit
-curl 0:8080
 
