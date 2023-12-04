@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 docker run -p 8080:80 -d -it holbertonschool/265-0
 docker ps
 docker exec -it CONTAINER_ID /bin/bash
