@@ -1,19 +1,7 @@
 #!/usr/bin/env bash
-# script to configure nginx default not to be root
-# backup for the nginx server
-cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.backup
-
-# Update the Nginx configuration to run as the nginx user
-sed -i 's/user\s*www-data;/user nginx;/' /etc/nginx/nginx.conf
-
-# Make Nginx listen on all active IPs on port 8080
-sed -i 's/listen\s*80;/listen 8080;/' /etc/nginx/sites-available/default
-
-# Restart Nginx to apply the changes
-service nginx restart
-
-# Display Nginx processes and check if it's running as the nginx user
-ps auxff | pgrep ngin[x]
-
-# Check if Nginx is listening on port 8080
-nc -z 0 8080 ; echo $?
+# allows a web server to run Nginx as the nginx user listening on port 8080.
+sed -i "s/#user www-data/user nginx/" /etc/nginx/nginx.conf
+sed -i "s/80/8080/g" /etc/nginx/sites-available/default
+chmod 644 /etc/nginx/nginx.conf
+pkill apache2
+sudo -u nginx service nginx start
