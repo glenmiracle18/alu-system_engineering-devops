@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# a script to check for the root use
+# check if only one arg is provided
+if ["$#" -ne 1]: then 
+  echo "Usage: $0 <username>"
+  exit 1
+fi
+
+# parsing the first argument to a variable
+username = "$1"
+
+sudo -u "$username" whoami
