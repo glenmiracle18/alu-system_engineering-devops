@@ -4,7 +4,7 @@
 cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.backup
 
 # Update the Nginx configuration to run as the nginx user
-sed -i 's/user\s*nginx;/user nginx;/' /etc/nginx/nginx.conf
+sed -i 's/user\s*www-data;/user nginx;/' /etc/nginx/nginx.conf
 
 # Make Nginx listen on all active IPs on port 8080
 sed -i 's/listen\s*80;/listen 8080;/' /etc/nginx/sites-available/default
